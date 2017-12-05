@@ -20,5 +20,74 @@ export default class Player extends Phaser.Sprite {
     this.animations.add('run', [11, 12, 13, 14, 15, 16, 17])
 
     this.game.physics.enable(this, Phaser.Physics.ARCADE)
+    this.body.collideWorldBounds = true
+    this.body.drag = { x: 600, y: 0 }
+    this.body.setSize(60, 100)
+    this.anchor.setTo(0.5, 1)
+    this.cursor = this.game.input.keyboard.createCursorKeys()
+    this.jumpButton = this.game.input.addKey(Phaser.Keyboard.SPACEBAR)
+    this.jumpButton.onDown.add(this.jump, this)
+
+    this.animations.play('idle', 9, true)
+
+    this.flashEffect = this.game.add.tween(this)
+      .to({alpha: 0}, 50, Phaser.Easing.BounceOut)
+      .to({alpha: 0.8}, 50, Phaser.Easing.BounceOut)
+      .to({alpha: 1}, 150, Phaser.Easing.BounceOut)
+  }
+
+  animationState () {
+    if (this.hitGround) {
+      this.animations.play('land', 15)
+    } else if (!this.inAir && !this.landAnimation.isPlaying) {
+      if (Math.abs(this.body.velocity.x) > 4) {
+        this.animations.play('run', 9, true)
+      } else if (this.body.onFloor()) {
+        this.animations.play('idle', 9, true)
+      }
+    }
+  }
+
+  update () {
+    this.hitGround = false
+    const wasAir = this.inAir
+    this.inAir = !this.body.onFloor()
+
+    if (this.inAir != wasAir && this.body.velocity > 0) {
+      this.hitGround = true
+    }
+
+    this.animationState()
+
+    this.speedToUse = this.inAir ? this.airSpeed : this.speed
+
+    if (this.cursor.left.isDown) {
+      this.scale.x = -1
+      this.body.velocity.x = -this.speedToUse
+    }
+
+    if (this.cursor.right.isDown) {
+      this.scale.x = 1
+      this.body.velocity.x = this.speedToUse
+    }
+  }
+
+  jump () {
+    if (this.body.onFloor() === true) {
+      this.body.velocity.y = -this.jumpPower
+      this.animations.play('jump', 30)
+      this.doubleJump = true
+    } else if (this.doubleJump === true) {
+      console.log('doubleJump: ', this.doubleJump)
+      this.doubleJump = false
+      this.body.velocity.y = -this.jumpPower
+      this.anmations.play('jump', 30)
+    }
+  }
+
+  flash () {
+    if (!this.flashEffect.isRunning) {
+      this.flashEffect.start()
+    }
   }
 }
