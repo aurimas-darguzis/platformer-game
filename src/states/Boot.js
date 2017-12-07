@@ -28,16 +28,16 @@ export default class extends Phaser.State {
      * Images - signs, collectables, UI elements.
      * Audio sprite
      */
-    this.load.spritesheet('player', '../../assets/images/sprites/FoxSprite.png', 210, 210)
-    this.load.image('gameBg', '../../assets/images/Background.png')
-    this.load.tilemap('level1', '../../assets/levels/level1.json', null, Phaser.Tilemap.TILED_JSON)
-    this.load.tilemap('level2', '../../assets/levels/level2.json', null, Phaser.Tilemap.TILED_JSON)
-    this.load.image('Tiles', '../../assets/images/Tiles.png')
-    this.load.image('coin', '../../assets/images/coin.png')
-    this.load.image('scoreholder', '../../assets/images/scoreholder.png')
-    this.load.image('sign', '../../assets/images/scoreholder.png')
-    this.load.image('gameover_bg', '../../assets/images/gameover_bg.png')
-    this.load.audiosprite('sfx', ['../../assets/sounds/sfx.mp3', '../../assets/sounds/sfx.ogg'], '../../assets/sounds/sfx.json')
+    this.load.spritesheet('player', '../assets/images/sprites/FoxSprite.png', 210, 210)
+    this.load.image('gameBg', '../assets/images/Background.png')
+    this.load.tilemap('level1', '../assets/levels/level1.json', null, Phaser.Tilemap.TILED_JSON)
+    this.load.tilemap('level2', '../assets/levels/level2.json', null, Phaser.Tilemap.TILED_JSON)
+    this.load.image('Tiles', '../assets/images/Tiles.png')
+    this.load.image('coin', '../assets/images/coin.png')
+    this.load.image('scoreholder', '../assets/images/scoreholder.png')
+    this.load.image('sign', '../assets/images/scoreholder.png')
+    this.load.image('gameover_bg', '../assets/images/gameover_bg.png')
+    this.load.audiosprite('sfx', ['../assets/sounds/sfx.mp3', '../assets/sounds/sfx.ogg'], '../assets/sounds/sfx.json')
   }
 
   render () {
