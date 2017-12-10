@@ -65,20 +65,33 @@ export default class Level1 extends Phaser.State {
   }
 
   update () {
-    // collect coin
-    // hit enemy
-    // keep track of score
+    this.physics.arcade.collide(this.player, this.layer)
+    this.physics.arcade.collide(this.enemies, this.layer)
+    this.physics.arcade.overlap(this.player, this.coins, this.collectCoin, null, this)
+    this.physics.arcade.overlap(this.player, this.doors, this.hitDoor, null, this)
+    this.physics.arcade.overlap(this.player, this.enemies, this.hitEnemy, null, this)
   }
 
   collectCoin (playerRef, coinRef) {
-
+    coinRef.kill()
+    this.game.score ++;
+    this.scoreField.setValue(this.game.score)
+    this.sfx.play('coin')
   }
 
   hitDoor (playerRef, doorRef) {
-
+    this.game.state.clearCurrentState()
+    this.game.state.start('Level2')
   }
 
   hitEnemy (playerRef, enemyRef) {
-
+    if (!playerRef.flashEffect.isRunning) {
+      playerRef.flash()
+      this.sfx.play('hit')
+      if (this.game.scoe > 0) {
+        this.game.score --
+        this.scoreField.setValue(this.game.score)
+      }
+    }
   }
 }
