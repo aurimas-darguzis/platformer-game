@@ -3,6 +3,7 @@ import { centerGameObjects } from '../utils'
 
 export default class extends Phaser.State {
   constructor () {
+    super()
     this.asset = null
     this.ready = false
   }
@@ -19,8 +20,7 @@ export default class extends Phaser.State {
     this.add.sprite(0, 0, 'loading_bg')
     this.asset = this.add.sprite(this.game.width / 2, this.game.height / 2, 'preloader')
     this.asset.anchor.setTo(0.5, 0.5)
-
-    this.loaderBar.onLoadComplete.addOnce(this.onLoadComplete, this)
+    // this.loaderBar.onLoadComplete.addOnce(this.onLoadComplete, this)
     this.load.setPreloadSprite(this.asset)
 
     this.load.spritesheet('player', 'assets/images/sprites/FoxSprite.png', 210, 210)

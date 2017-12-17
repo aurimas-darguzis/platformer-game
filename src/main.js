@@ -19,6 +19,10 @@ class Game extends Phaser.Game {
 
     super(width, height, Phaser.CANVAS, 'content', null)
 
+    /**
+     * Import all states. When you want to add more - do it in 'states' folder.
+     */
+
     this.state.add('Boot', BootState, false)
     this.state.add('Splash', SplashState, false)
     this.state.add('Game', GameState, false)
