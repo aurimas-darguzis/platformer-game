@@ -87,15 +87,33 @@ export default class Player extends Phaser.Sprite {
     }
   }
 
+  /**
+   * Now that the player is set up, the next step is to implement the player's custom
+   * update method. The first step of this process is to place the object into the right
+   * animation state. This game object has animations for running, standing, jumping, falling,
+   * and hitting the groud. For the animations to work properly, the prefab needs to track the
+   * properties that relate to those animations and trigger a change when sonemthing significant
+   * happens. The factors that affect the player's are if it is currently airborne or if just
+   * hit the ground and should trigger the hit ground animation.
+   */
   update () {
+    /**
+     * We need to track these states. First, inAir state of the object is stored from the last frame,
+     * which will be contrasted later on with the current in air state to determine if the player just
+     * hit the ground. Next, using `this.body.onFloor`, the player updates its inAir state. Finally, the
+     * hitGround property is set to false to ensure the value will only be 'true' frame when it hits the ground.
+     * There are two conditions that need to be met for the hitGround property to be true. First, the fox needs
+     * to be in the air last update, and on the ground this update. Also the player needs to be falling downward
+     * (meaning they need a downward velocity greater than zero).
+     * Once the general state of the player has been property set, a method is called to actually figure out
+     * which animation should be currently playing.
+     */
     this.hitGround = false
     const wasAir = this.inAir
     this.inAir = !this.body.onFloor()
-
     if (this.inAir != wasAir && this.body.velocity > 0) {
       this.hitGround = true
     }
-
     this.animationState()
 
     this.speedToUse = this.inAir ? this.airSpeed : this.speed
