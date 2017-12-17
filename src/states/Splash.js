@@ -56,3 +56,6 @@ export default class extends Phaser.State {
     this.ready = true
   }
 }
+
+
+// http://www.html5gamedevs.com/topic/27846-issue-with-loading-assets/
