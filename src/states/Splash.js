@@ -1,6 +1,14 @@
 import Phaser from 'phaser'
 import { centerGameObjects } from '../utils'
 
+/**
+ * This game will load in a lot fo image and sound files. It needs sprite sheets for the
+ * animated player and mouse, which have some beautiful animations and images that will
+ * be used for the world foreground and background. The map data for the two levels is loaded in,
+ * using the tiled_json format, so we can access the extra data that Tiled export with its specific
+ * maps. Some images are loaded in for other game objects, like signs, collectrables, UI elements.
+ * Also audio sprite is loaded. Multiple formats are used for browser compatibility.
+ */
 export default class extends Phaser.State {
   constructor () {
     super()
