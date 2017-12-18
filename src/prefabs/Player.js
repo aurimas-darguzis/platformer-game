@@ -116,6 +116,15 @@ export default class Player extends Phaser.Sprite {
     }
     this.animationState()
 
+    /**
+     * The next step is to move the player. The actual movement code is a simple test to see if the left or right
+     * arrows are depressed and to add velocity to the object if they are. Because the player has a varied speed based
+     * on his grounded state, the speed to use as his velocity is stored in a vaible beforehand. If the player is in the
+     * sky, then speedToUse will default to the left side of the colon in the first line (this.airSpeed). If the player is
+     * grounded the right side of the colon (this.speed) will be the speed that will be used for the player motion.
+     * Based on the direction the player is inputting to the keyboard, the player sprite will be flipped right or left by changing
+     * its scale.x to be positive (facing right) or negative (facing left).
+     */
     this.speedToUse = this.inAir ? this.airSpeed : this.speed
 
     if (this.cursor.left.isDown) {
