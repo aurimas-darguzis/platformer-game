@@ -59,6 +59,10 @@ export default class Player extends Phaser.Sprite {
     this.body.setSize(60, 100)
     this.anchor.setTo(0.5, 1)
     this.cursor = this.game.input.keyboard.createCursorKeys()
+
+    /**
+     * The jump is handled by a key down handler.
+     */
     this.jumpButton = this.game.input.addKey(Phaser.Keyboard.SPACEBAR)
     this.jumpButton.onDown.add(this.jump, this)
 
@@ -75,6 +79,19 @@ export default class Player extends Phaser.Sprite {
       .to({alpha: 1}, 150, Phaser.Easing.BounceOut)
   }
 
+  /**
+   * Let's hand the animation. It has been placed into separate method so as much of the animation can
+   * be done in one place and not get lost throughout all the other portions of the player's update and
+   * state code.
+   * First, if the player has just hit the ground, then the landing animation is triggered. While it is
+   * only a few frames, the bit of down and compression on the character when he lands imparts a good and
+   * solid 'landing feeling'.
+   * If the player is not in the process of landing and they are on the ground, the game then checks the
+   * player's speed. If they're moving fast enough on the x-axis (the Math.abs removing the need to deal
+   * with negative speed), then the run animation is activated for this sprite. If they player isn't moving
+   * fast enough to warrant a run animation, the idle is played instead. Because the check for the switch to
+   * idle transition still contains some movement for the character, fox will slide slightly to a complete stop.
+   */
   animationState () {
     if (this.hitGround) {
       this.animations.play('land', 15)
@@ -138,6 +155,15 @@ export default class Player extends Phaser.Sprite {
     }
   }
 
+  /**
+   * This handler will implement a double jump, so there are two sets of
+   * jump conditions to be validated. For the first jump, it is only necessary to check to see if the player is on the ground.
+   * If they are, they are given an upward velocity equal to the jump power configured in the constructor.
+   * The jump animation is triggered and the doubleJump flag is set to true.
+   * If the jump button is pressed and the player is not on the ground, the double jump flag is checked. If it
+   * is 'true', then the player can jump again. The same impulse and animation are applied, and the double jump flag is deactivated.
+   * The player will not be able to use another jump in the sky until they jump from the ground again and reset the doubleJump variable.
+   */
   jump () {
     if (this.body.onFloor() === true) {
       this.body.velocity.y = -this.jumpPower
@@ -151,6 +177,12 @@ export default class Player extends Phaser.Sprite {
     }
   }
 
+  /**
+   * It is a simple method that will play the flash animation that was configured in the constructor.
+   * The only other special consideration in this method is to ensure that it will not restart the
+   * animation every time the flash method is called. This will give the animation the time it needs
+   * to actually play through its whole duration, so the player will actually flash and not just fade.
+   */
   flash () {
     if (!this.flashEffect.isRunning) {
       this.flashEffect.start()
