@@ -85,6 +85,9 @@ export default class Mouse extends Phaser.Sprite {
       }
     }
 
+    /**
+     * 
+     */
     if (!this.swingAnimation.isPlaying) {
       this.currentStep++
       this.body.velocity.x = this.speed
