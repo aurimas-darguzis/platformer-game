@@ -1,4 +1,21 @@
+/**
+ * The next unique prefab in this game is the mouse prefab that will act as the
+ * enemy and obstacle in the game. They are not going to be the smartest of mice
+ * and will simply patrol back and forth. Should the fox get near enough to bother
+ * them, they will stop and slash at the player but the moment the fox gets out of
+ * their 'anger zone', they will resume their patrol.
+ */
 export default class Mouse extends Phaser.Sprite {
+  /**
+   * The constructor for the mouse does many of the basic setup functions to get
+   * a sprite into a 2D world including setting up its drag, adding animations, and
+   * placing the anchor at the center of the sprite so it can be flipped widthwise.
+   * 
+   * @param {*} game 
+   * @param {*} x 
+   * @param {*} y 
+   * @param {*} player 
+   */
   constructor (game, x, y, player) {
     super(game, x, y, 'mouse', 0)
 
@@ -7,6 +24,16 @@ export default class Mouse extends Phaser.Sprite {
      */
     this.speed = 200
     this.jumpPower = 600
+
+    /**
+     * This control patrol area and where the mouse starts on patrol.
+     * stepLimit - is the number of steps that the mouse can take in any direction before it will turn
+     * around and start walking in the other direction. The currentStep is where the mouse is on its step limit and is initialized
+     * as a random number within the step limit. Setting each mouse to a random starting point in its patrol
+     * helps to randomise the direction the mice in the game are facing. With the random starting points, the mice
+     * will change directions at different times in the game instead of all of them doing an about-face at exactly
+     * the same time.
+     */
     this.stepLimit = 90
     this.facing = 0
     this.currentStep = Math.floor(Math.random() * this.stepLimit)
@@ -28,7 +55,14 @@ export default class Mouse extends Phaser.Sprite {
     this.animations.play('run', 9, true)
   }
 
+  /**
+   * This method handles moving the mouse forward, flipping it around when it has reached the limits
+   * of its patrol, and attacking the player when it gets too near.
+   */
   update () {
+    /**
+     * 
+     */
     const dist = Phaser.Math.distance(this.x, this.y, this.player.x, this.player.y)
 
     if (Math.random(dist) < 210) {
