@@ -100,3 +100,9 @@ export default class Mouse extends Phaser.Sprite {
     }
   }
 }
+/**
+ * Note: Where does the Player Object come from?
+ * 
+ * Nowhere in the mouse's code is the player expicitly set. The player reference will be provided in the game state code right
+ * after the mouse is created. Look for the line 'this.enemies.setAll('player', this.player)' to se how the reference is provided.
+ */
