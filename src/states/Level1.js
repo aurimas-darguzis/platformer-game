@@ -14,6 +14,7 @@ export default class Level1 extends Phaser.State {
 
     // map start
     this.map = this.add.tilemap('level1')
+    console.log(this.map)
 
     // paralax background
     this.map.addTilesetImage('gamebg')
@@ -26,6 +27,7 @@ export default class Level1 extends Phaser.State {
     this.layer = this.map.createLayer('Level1')
 
     // collision
+    console.log(this.layer)
     this.layer.resizeWorld()
     this.map.setCollisionBetween(6, 25, true, this.layer)
 
