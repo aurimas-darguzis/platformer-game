@@ -86,7 +86,11 @@ export default class Mouse extends Phaser.Sprite {
     }
 
     /**
-     * 
+     * The final bit of code checks to see if the step limit has been reached. If that is so,
+     * the walking speed of the mouse is reversed, which will cause it to move in the opposite
+     * directiono starting with the next frame, and its step limit is reset.
+     * It will need to walk in this new direction for as many frames as it takes to get
+     * to the step limit again before it will turn around once more.
      */
     if (!this.swingAnimation.isPlaying) {
       this.currentStep++
@@ -104,7 +108,7 @@ export default class Mouse extends Phaser.Sprite {
   }
 }
 /**
- * Note: Where does the Player Object come from?
+ * Note - Where does the Player Object come from?
  * 
  * Nowhere in the mouse's code is the player expicitly set. The player reference will be provided in the game state code right
  * after the mouse is created. Look for the line 'this.enemies.setAll('player', this.player)' to se how the reference is provided.

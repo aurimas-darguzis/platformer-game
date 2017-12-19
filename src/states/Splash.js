@@ -17,20 +17,23 @@ export default class extends Phaser.State {
   }
 
   preload () {
-    this.loaderBg = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loaderBg')
-    this.loaderBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loaderBar')
-    centerGameObjects([this.loaderBg, this.loaderBar])
-
-    this.load.setPreloadSprite(this.loaderBar)
+    this.load.image('loading_bg', '../assets/images/loading_bg.jpg')
   }
 
   create () {
-    this.add.sprite(0, 0, 'loading_bg')
+    this.add.sprite(0, 0, 'loading_bg') 
     this.asset = this.add.sprite(this.game.width / 2, this.game.height / 2, 'preloader')
     this.asset.anchor.setTo(0.5, 0.5)
-    // this.loaderBar.onLoadComplete.addOnce(this.onLoadComplete, this)
+
+    this.load.onLoadComplete.addOnce(this.onLoadComplete, this)
     this.load.setPreloadSprite(this.asset)
 
+    /**
+     * Sprites for animated player and mouse, which have some animations and images for backgorund and foreground.
+     * The map data for 2 levels, using tiled_json format.
+     * Images - signs, collectables, UI elements.
+     * Audio sprite
+     */
     this.load.spritesheet('player', 'assets/images/sprites/FoxSprite.png', 210, 210)
     this.load.spritesheet('mouse', 'assets/images/sprites/MouseSprite.png', 165, 160)
     this.load.image('gamebg', 'assets/images/Background.png')
