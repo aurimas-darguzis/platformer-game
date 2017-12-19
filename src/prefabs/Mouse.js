@@ -61,10 +61,20 @@ export default class Mouse extends Phaser.Sprite {
    */
   update () {
     /**
-     * 
+     * First, let's check of the player is near enough to make an attack. The distance between the mouse and the player is calculated
+     * using Phaser's built-in distance method. Distance in this case is thge length of the line from the player's anchor
+     * point to the mouse's anchor point.
      */
     const dist = Phaser.Math.distance(this.x, this.y, this.player.x, this.player.y)
 
+    /**
+     * The next portion checks to see if the player qualifies as 'close enough' based on the distance between the mouse and player.
+     * The 'magic number' of 210 has been provided in here because it gives a very good feel to the reaction time of the mouse,
+     * but you are free to play with this number to get values for a very lazy mouse or one that really just wants to swing its sword a lot.
+     * If the player is close enough, the swing animation is triggered, abnd the mouse is flipped to face player. The flip (scaling left or right)
+     * is based on the location of the mouse relative to the player. If the player's x location is less than the mouse's x position, then the mouse needs to face left
+     * to swing, or vice versa, for right.
+     */
     if (Math.random(dist) < 210) {
       this.animations.play('swing', 9)
 
